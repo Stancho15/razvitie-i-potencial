@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Развитие и потенциал · Сайтове за малкия бизнес в Стара Загора</title>
   <meta name="description" content="Сайтове за малки фирми в Стара Загора, които растат и искат повече хора да научат за тях. Безплатно демо с вашето име, преди да решите.">
+  <meta name="theme-color" content="#f2efe8">
   <meta property="og:title" content="Развитие и потенциал · Сайтове за малкия бизнес">
   <meta property="og:description" content="Малък бизнес. Голям потенциал. Безплатно демо с вашето име, преди да решите.">
   <meta property="og:image" content="assets/iv-art-desktop.png">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <!-- Motion only hides content once JavaScript is known to run, so the page is never blank without it. -->
+  <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
   <a class="skip" href="#main">Към съдържанието</a>
@@ -31,37 +35,42 @@
 
     <section class="hero">
       <div class="hero__copy">
-        <p class="kicker">Сайтове за малкия бизнес · Стара Загора</p>
-        <h1 class="hero__title">Малък бизнес.<br><em>Голям потенциал.</em></h1>
-        <p class="hero__lead">Правя сайтове за малки фирми, които растат и искат повече хора да научат за тях. Хубав сайт, който клиентът намира в Google, разглежда от телефона и след това ви се обажда.</p>
-        <div class="actions">
-          <a class="btn btn--ink" href="#kontakt">Искам безплатно демо</a>
+        <p class="kicker intro" style="--d:0">Сайтове за малкия бизнес · Стара Загора</p>
+        <h1 class="hero__title">
+          <span class="line"><span class="word" style="--d:1">Малък</span> <span class="word" style="--d:2">бизнес.</span></span>
+          <em class="line"><span class="word" style="--d:3">Голям</span> <span class="word" style="--d:4">потенциал.</span></em>
+        </h1>
+        <p class="hero__lead intro" style="--d:6">Правя сайтове за малки фирми, които растат и искат повече хора да научат за тях. Хубав сайт, който клиентът намира в Google, разглежда от телефона и след това ви се обажда.</p>
+        <div class="actions intro" style="--d:7">
+          <a class="btn btn--ink" href="#kontakt">Искам безплатно демо <span class="btn__arrow" aria-hidden="true">→</span></a>
           <a class="btn btn--line" href="#rabota">Виж работата ми</a>
         </div>
       </div>
 
       <div class="hero__shots" aria-hidden="true">
-        <div class="frame frame--desktop">
-          <img src="assets/iv-art-desktop.png" alt="" width="1280" height="800">
-        </div>
-        <div class="frame frame--phone">
-          <img src="assets/iv-art-phone.png" alt="" width="500" height="1082">
+        <div class="hero__tilt">
+          <div class="frame frame--desktop">
+            <img src="assets/iv-art-desktop.png" alt="" width="1280" height="800">
+          </div>
+          <div class="frame frame--phone">
+            <img src="assets/iv-art-phone.png" alt="" width="500" height="1082">
+          </div>
         </div>
       </div>
     </section>
 
     <section class="work" id="rabota" aria-labelledby="rabota-title">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 id="rabota-title">Последен проект</h2>
       </div>
 
       <article class="project">
-        <a class="project__media" href="https://stancho15.github.io/Stancho15/" target="_blank" rel="noopener" aria-label="Отвори сайта IV Art в нов раздел">
+        <a class="project__media" href="https://stancho15.github.io/Stancho15/" target="_blank" rel="noopener" aria-label="Отвори сайта IV Art в нов раздел" data-reveal="wipe">
           <div class="frame frame--desktop frame--flat">
             <img src="assets/iv-art-desktop.png" alt="Страница от сайта IV Art: серията „Venice &amp; Rome“ с картина на канал във Венеция." width="1280" height="800" loading="lazy">
           </div>
         </a>
-        <div class="project__info">
+        <div class="project__info" data-reveal style="--d:2">
           <p class="project__tag">Галерия · художник от Стара Загора</p>
           <h3 class="project__name">IV Art</h3>
           <p class="project__text">Сайт-галерия за картините на Ивелина, маслени и акрилни. Всяка картина има своя страница, а посетителят може да пита за цена или поръчка с едно докосване.</p>
@@ -76,23 +85,23 @@
     </section>
 
     <section class="gets" aria-labelledby="gets-title">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 id="gets-title">Сайт, който работи за вас, <em>докато вие работите</em></h2>
       </div>
       <ol class="gets__grid">
-        <li>
+        <li data-reveal style="--d:0">
           <h3>Хората ви намират</h3>
           <p>Сайтът е свързан с профила ви в Google Maps, така че който търси услугата ви в града, вижда и вас.</p>
         </li>
-        <li>
+        <li data-reveal style="--d:1">
           <h3>Първо за телефон</h3>
           <p>Повечето хора ви търсят от телефона. Обаждане и упътване до вратата ви са с едно докосване.</p>
         </li>
-        <li>
+        <li data-reveal style="--d:2">
           <h3>Изглеждате като голяма фирма</h3>
           <p>Вашите снимки, вашите думи и вашите цени, подредени така, че клиентът да ви се довери от първия поглед.</p>
         </li>
-        <li>
+        <li data-reveal style="--d:3">
           <h3>Поддръжка след пускането</h3>
           <p>Нова цена, нова услуга, празнично работно време. Пишете ми и го сменям.</p>
         </li>
@@ -100,21 +109,21 @@
     </section>
 
     <section class="steps" id="kak" aria-labelledby="kak-title">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 id="kak-title">Три стъпки до сайт онлайн</h2>
       </div>
       <ol class="steps__list">
-        <li>
+        <li data-reveal style="--d:0">
           <span class="steps__num">01</span>
           <h3>Безплатно демо</h3>
           <p>Правя начален екран с вашето име и данни и ви го пращам като линк. Без ангажимент.</p>
         </li>
-        <li>
+        <li data-reveal style="--d:3">
           <span class="steps__num">02</span>
           <h3>Вашите снимки и цени</h3>
           <p>Ако ви хареса, ми давате снимки, ценоразпис и какво искате да се вижда. Довършвам сайта.</p>
         </li>
-        <li>
+        <li data-reveal style="--d:6">
           <span class="steps__num">03</span>
           <h3>Онлайн</h3>
           <p>Купуваме домейн, пускаме сайта и го свързваме с профила ви в Google Maps.</p>
@@ -123,12 +132,12 @@
     </section>
 
     <section class="contact" id="kontakt" aria-labelledby="kontakt-title">
-      <h2 id="kontakt-title">Време е хората да <em>научат за вас.</em></h2>
-      <p class="contact__lead">Пишете ми името на бизнеса си. В рамките на няколко дни ви пращам линк към демо, без ангажимент.</p>
+      <h2 id="kontakt-title" data-reveal>Време е хората да <em>научат за вас.</em></h2>
+      <p class="contact__lead" data-reveal style="--d:1">Пишете ми името на бизнеса си. В рамките на няколко дни ви пращам линк към демо, без ангажимент.</p>
       <!-- TODO: попълни истинските си данни за контакт -->
       <div class="contact__ways">
-        <a class="contact__way" href="mailto:{{имейл}}"><span>Имейл</span>{{имейл}}</a>
-        <a class="contact__way" href="tel:{{телефон}}"><span>Телефон и Viber</span>{{телефон}}</a>
+        <a class="contact__way" href="mailto:{{имейл}}" data-reveal style="--d:2"><span>Имейл</span>{{имейл}}</a>
+        <a class="contact__way" href="tel:{{телефон}}" data-reveal style="--d:3"><span>Телефон и Viber</span>{{телефон}}</a>
       </div>
     </section>
 
@@ -137,5 +146,7 @@
   <footer class="foot">
     <p><span class="brand brand--small">Развитие <span>и</span> потенциал</span> Сайтове за малкия бизнес · Стара Загора</p>
   </footer>
+
+  <script src="motion.js"></script>
 </body>
 </html>

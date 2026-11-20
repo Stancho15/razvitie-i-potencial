@@ -5,16 +5,20 @@
   --ink-2: #57524a;
   --line: rgba(21, 19, 15, 0.14);
   --cobalt: #2a3fd1;
-  --cobalt-deep: #1d2ea3;
+  --lavender: #8f9dff;
 
   --display: "Unbounded", "Segoe UI", sans-serif;
   --body: "Onest", "Segoe UI", sans-serif;
   --gutter: clamp(16px, 5vw, 72px);
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --stagger: 80ms;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 body {
   margin: 0;
   background: var(--paper);
@@ -27,6 +31,7 @@ ol, ul { list-style: none; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 p { text-wrap: pretty; }
+::selection { background: var(--cobalt); color: #fff; }
 a:focus-visible, .btn:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 3px; }
 
 .skip {
@@ -37,7 +42,7 @@ a:focus-visible, .btn:focus-visible { outline: 2px solid var(--cobalt); outline-
   background: var(--ink);
   color: var(--paper);
   border-radius: 8px;
-  z-index: 10;
+  z-index: 30;
 }
 .skip:focus { top: 16px; }
 
@@ -58,7 +63,7 @@ h2 {
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt); }
+h2 em, .hero__title em { font-style: normal; color: var(--cobalt); }
 
 /* ---------- Buttons ---------- */
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -72,11 +77,12 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
   border: 1px solid transparent;
   font-weight: 500;
   text-decoration: none;
-  transition: background 0.25s var(--ease), border-color 0.25s var(--ease), transform 150ms ease-out;
+  transition: background-color 250ms ease, border-color 250ms ease, transform 150ms ease-out;
 }
 .btn:active { transform: scale(0.96); }
 .btn--ink { background: var(--ink); color: var(--paper); }
 .btn--line { border-color: var(--line); }
+.btn__arrow { display: inline-block; margin-left: 10px; transition: transform 250ms var(--ease-out); }
 
 .link {
   display: inline-flex;
@@ -86,17 +92,27 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
   text-decoration: none;
   border-bottom: 1.5px solid var(--cobalt);
   padding-bottom: 2px;
-  transition: color 0.2s var(--ease);
+  transition: color 200ms ease;
 }
-.link::after { content: "→"; transition: transform 0.3s var(--ease); }
+.link::after { content: "→"; transition: transform 250ms var(--ease-out); }
 
 /* ---------- Header ---------- */
 .top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 22px var(--gutter);
+  padding: 20px var(--gutter);
+  transition: background-color 250ms ease, box-shadow 250ms ease;
+}
+.top.is-scrolled {
+  background: rgba(242, 239, 232, 0.82);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: 0 1px 0 var(--line);
 }
 .brand {
   font-family: var(--display);
@@ -108,9 +124,21 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
 }
 .brand span { font-weight: 400; color: var(--cobalt); }
 .brand--small { font-size: 1rem; color: var(--paper); margin-right: 10px; }
-.brand--small span { color: #8f9dff; }
+.brand--small span { color: var(--lavender); }
 .top__links { display: flex; gap: 28px; font-size: 0.94rem; }
-.top__links a { text-decoration: none; color: var(--ink-2); transition: color 0.2s; }
+.top__links a { position: relative; text-decoration: none; color: var(--ink-2); transition: color 200ms ease; }
+.top__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms var(--ease-out);
+}
 
 /* ---------- Hero ---------- */
 .hero {
@@ -118,20 +146,23 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: clamp(32px, 5vw, 80px);
   align-items: center;
-  padding: clamp(32px, 6vw, 96px) var(--gutter) clamp(64px, 9vw, 140px);
+  padding: clamp(24px, 5vw, 80px) var(--gutter) clamp(64px, 9vw, 140px);
 }
 .hero__title {
   font-family: var(--display);
   font-weight: 500;
-  font-size: clamp(2.4rem, 6.2vw, 5.4rem);
+  font-size: clamp(2.2rem, 5.3vw, 4.7rem);
   line-height: 1.02;
   letter-spacing: -0.035em;
-  text-wrap: balance;
   margin-bottom: clamp(20px, 2.5vw, 32px);
 }
+/* Each line is a mask that clips only at its bottom edge, so words rise up into it and nothing is cut at the sides. */
+.hero__title .line { display: block; padding-bottom: 0.14em; margin-bottom: -0.14em; clip-path: inset(-0.5em -1em 0 -1em); }
+.hero__title .word { display: inline-block; }
 .hero__lead { max-width: 40ch; color: var(--ink-2); font-size: clamp(1.02rem, 1.4vw, 1.18rem); margin-bottom: 32px; }
 
-.hero__shots { position: relative; padding-bottom: 12%; }
+.hero__shots { position: relative; padding-bottom: 12%; perspective: 1400px; }
+.hero__tilt { position: relative; transform-style: preserve-3d; }
 
 /* ---------- Frames around screenshots ---------- */
 .frame {
@@ -146,7 +177,7 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
 .frame--phone {
   position: absolute;
   right: -2%;
-  bottom: 0;
+  bottom: -12%;
   width: 28%;
   border-radius: 22px;
   border: 5px solid #0f0d0b;
@@ -156,7 +187,6 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
 /* ---------- Sections ---------- */
 .work, .gets, .steps { padding: clamp(64px, 9vw, 130px) var(--gutter); border-top: 1px solid var(--line); }
 .section-head { max-width: 760px; margin-bottom: clamp(36px, 5vw, 64px); }
-.section-head__note { margin-top: 18px; color: var(--ink-2); max-width: 58ch; }
 
 /* ---------- Project ---------- */
 .project {
@@ -166,10 +196,7 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
   align-items: center;
 }
 .project__media { display: block; text-decoration: none; }
-.project__media .frame { transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease); }
-@media (hover: hover) {
-  .project__media:hover .frame { transform: translateY(-6px); }
-}
+.project__media .frame { transition: transform 500ms var(--ease-out), box-shadow 500ms var(--ease-out); }
 .project__tag { font-size: 0.82rem; color: var(--ink-2); margin-bottom: 10px; }
 .project__name {
   font-family: var(--display);
@@ -210,7 +237,17 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(20px, 3vw, 48px);
 }
-.steps__list li { border-top: 2px solid var(--ink); padding-top: 22px; }
+.steps__list li { position: relative; padding-top: 22px; }
+.steps__list li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--ink);
+  transform-origin: left;
+}
 .steps__num {
   display: block;
   font-family: var(--display);
@@ -226,7 +263,7 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
   padding: clamp(72px, 10vw, 150px) var(--gutter);
 }
 .contact h2 { font-size: clamp(2rem, 5.4vw, 4.4rem); max-width: 16ch; }
-.contact h2 em { color: #8f9dff; }
+.contact h2 em { color: var(--lavender); }
 .contact__lead { max-width: 46ch; margin: 22px 0 44px; color: rgba(242, 239, 232, 0.72); font-size: 1.08rem; }
 .contact__ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 820px; }
 .contact__way {
@@ -240,20 +277,9 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
   font-family: var(--display);
   font-size: clamp(1rem, 1.8vw, 1.3rem);
   overflow-wrap: anywhere;
-  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
 }
 .contact__way span { font-family: var(--body); font-size: 0.8rem; color: rgba(242, 239, 232, 0.55); }
-.contact__way:focus-visible { outline-color: #8f9dff; }
-
-/* Hover styling only where a real pointer can hover, so taps on phones don't leave it stuck */
-@media (hover: hover) {
-  .btn--ink:hover { background: var(--cobalt); }
-  .btn--line:hover { border-color: var(--ink); }
-  .link:hover { color: var(--cobalt); }
-  .link:hover::after { transform: translateX(4px); }
-  .top__links a:hover { color: var(--ink); }
-  .contact__way:hover { border-color: #8f9dff; background: rgba(143, 157, 255, 0.08); }
-}
+.contact__way:focus-visible { outline-color: var(--lavender); }
 
 /* ---------- Footer ---------- */
 .foot {
@@ -268,9 +294,75 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
   border-top: 1px solid rgba(242, 239, 232, 0.12);
 }
 
+/* =========================================================
+   Motion
+   ========================================================= */
+
+/* Hero entrance: runs once on load, as CSS so it stays smooth while the page is still loading. */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+@keyframes word-up { from { transform: translateY(110%); } }
+@keyframes shot-in { from { opacity: 0; transform: translateY(40px) scale(0.96); } }
+@keyframes phone-in { from { opacity: 0; transform: translateY(70px); } }
+
+.intro { animation: rise 800ms var(--ease-out) both; animation-delay: calc(var(--d) * 90ms + 100ms); }
+.hero__title .word { animation: word-up 900ms var(--ease-out) both; animation-delay: calc(var(--d) * 90ms + 100ms); }
+.hero .frame--desktop { animation: shot-in 1100ms var(--ease-out) 350ms both; }
+.hero .frame--phone { animation: phone-in 1100ms var(--ease-out) 650ms both; }
+
+/* Scroll reveals: hidden only when JavaScript runs, revealed once by motion.js. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 800ms var(--ease-out), transform 900ms var(--ease-out);
+  transition-delay: calc(var(--d, 0) * var(--stagger));
+}
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* The project screenshot wipes open from the top while the image settles from a slight zoom.
+   The final inset is negative so the frame's shadow is never clipped. */
+.js [data-reveal="wipe"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(-80px -80px 100% -80px);
+  transition: clip-path 1100ms var(--ease-in-out);
+}
+.js [data-reveal="wipe"].is-in { clip-path: inset(-80px -80px -80px -80px); }
+.js [data-reveal="wipe"] img { transform: scale(1.08); transition: transform 1600ms var(--ease-out); }
+.js [data-reveal="wipe"].is-in img { transform: none; }
+
+/* Step lines draw left to right, one after another, to show the order. */
+.js .steps__list li[data-reveal]::before {
+  transform: scaleX(0);
+  transition: transform 900ms var(--ease-in-out);
+  transition-delay: calc(var(--d, 0) * var(--stagger) + 150ms);
+}
+.js .steps__list li[data-reveal].is-in::before { transform: none; }
+
+/* Hover only where a real pointer can hover, so taps on phones don't leave it stuck. */
+@media (hover: hover) and (pointer: fine) {
+  .btn--ink:hover { background: var(--cobalt); }
+  .btn--ink:hover .btn__arrow { transform: translateX(4px); }
+  .btn--line:hover { border-color: var(--ink); }
+  .link:hover { color: var(--cobalt); }
+  .link:hover::after { transform: translateX(4px); }
+  .top__links a:hover { color: var(--ink); }
+  .top__links a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .project__media:hover .frame { transform: translateY(-6px); }
+  .contact__way { transition: border-color 250ms ease, background-color 250ms ease; }
+  .contact__way:hover { border-color: var(--lavender); background: rgba(143, 157, 255, 0.08); }
+}
+
+/* Reduced motion: keep gentle fades, drop every movement. */
+@keyframes fade { from { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; }
+  .intro, .hero__title .word, .hero .frame--desktop, .hero .frame--phone { animation: fade 400ms ease both; }
+  .js [data-reveal] { transform: none; transition: opacity 400ms ease; }
+  .js [data-reveal="wipe"] { clip-path: none; opacity: 0; }
+  .js [data-reveal="wipe"].is-in { opacity: 1; }
+  .js [data-reveal="wipe"] img { transform: none; }
+  .js .steps__list li[data-reveal]::before { transform: none; }
+  .btn:active { transform: none; }
 }
 
 /* ---------- Tablet ---------- */
@@ -283,6 +375,8 @@ h2 em, .hero__title em, .contact h2 em { font-style: normal; color: var(--cobalt
 /* ---------- Phone ---------- */
 @media (max-width: 600px) {
   body { font-size: 16px; }
+  html { scroll-padding-top: 72px; }
+  .top { padding-block: 16px; }
   .top__links { display: none; }
   .actions .btn { flex: 1 1 100%; }
   .gets__grid, .contact__ways { grid-template-columns: minmax(0, 1fr); }
